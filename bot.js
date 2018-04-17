@@ -39,7 +39,7 @@ client.on('message', async msg => {
 				string = "'" + mapName + "' is not a valid PUBG map";
 			}
 		} else {
-			string = "usage: pb?drop <map_name>";
+			string = "usage: .drop <map_name>";
 		}
 		const m = await msg.channel.send(string);
 	}
