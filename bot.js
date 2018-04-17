@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const prefix = ".";
+// Get drop locations
+const dropLocations = require("./dropLocations.json");
 
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
@@ -24,6 +26,28 @@ client.on('message', async msg => {
 	if (command === "stats") {
 		//to do
 	}
+
+	// Give user a random location to drop
+	if (command === "drop") {
+    var string = "";
+    if (args.length == 1) {
+      const mapName = args[0];
+      const locations = dropLocations[mapName];
+      if (locations) {
+        string = locations[getRandomInt(locations.length)];
+      } else {
+        string = "'" + mapName + "' is not a valid PUBG map";
+      }
+    } else {
+      string = "usage: pb?drop <map_name>";
+    }
+    const m = await msg.channel.send(string);
+  }
+
+	// Returns a random int from 0 to max
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
 });
 
 client.login(process.env.DISCORD_TOKEN);
